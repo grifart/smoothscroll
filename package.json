@@ -1,0 +1,12 @@
+{
+  "name": "@grifart/smoothscroll",
+  "version": "0.1.0",
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "smoothscroll-polyfill": "^0.4.3"
+  },
+  "browserify": {
+    "transform": ["babelify"]
+  }
+}
