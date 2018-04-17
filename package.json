@@ -4,7 +4,6 @@
   "main": "index.js",
   "private": true,
   "dependencies": {
-    "smoothscroll-polyfill": "^0.4.3",
     "velocity-animate": "^1.5.1"
   },
   "browserify": {

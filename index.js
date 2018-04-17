@@ -1,5 +1,5 @@
 import Velocity from 'velocity-animate';
-// import smoothScroll from 'smoothscroll-polyfill';
+// import smoothScroll from 'smoothscroll-polyfill';  In case of use, add `smoothscroll-polyfill` via `yarn add` first.
 
 /**
  * As of version 62, Chrome started to support natively `behavior: smooth` in  `scrollIntoView()` method.
