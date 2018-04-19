@@ -46,6 +46,17 @@ export const handleInteraction = (windowObject, documentObject) => {
 	});
 };
 
+/**
+ * This function scrolls smoothly to an element if there is a hash in the URL.
+ * E.g. you have `#example` in URL, then it scrolls to element with id `example`.
+ *
+ * Note:
+ * Because of UX, this behaviour is limited only when whole document is loaded in less than 500ms.
+ * Otherwise, it jumps directly to desired element without smooth scrolling, because too visible jumping through the page would appear.
+ *
+ * @param windowObject window object
+ * @param documentObject document object
+ */
 export const handleLoad = (windowObject, documentObject) => {
 	if (typeof document.querySelector === 'undefined') {
 		return;
@@ -57,14 +68,37 @@ export const handleLoad = (windowObject, documentObject) => {
 		return;
 	}
 
-	windowObject.addEventListener('load', () => { // The `load` event has been chosen intentionally as it is the only state when everything is loaded and the scroll will proceed correctly (it will slide to correct offset).
-		if (windowObject.location.hash) {
-			// First, we need to go to top immediately (hack to prevent jump to desired element).
-			windowObject.scroll({top: 0, left: 0});
+	// If no hash, we do not need to run scrolling.
+	if (!windowObject.location.hash) {
+		return;
+	}
 
-			// Then, scroll down to it smoothly.
-			scrollTo(windowObject.location.hash, documentObject, windowObject);
+	// If performance is not present, the browser would not scroll smoothly otherwise I guess. So let's skip it completely, it's not worth fallbacking to Date() function.
+	if (typeof performance === 'undefined') {
+		return;
+	}
+
+	// Start timer.
+	const start = performance.now();
+
+	/*
+	 * The `load` event has been chosen intentionally as it is the state when everything is ready -
+	 * all styles are loaded and offsets are computed correctly - so the scroll will be computed correctly.
+	 */
+	windowObject.addEventListener('load', () => {
+		// End timer.
+		const end = performance.now();
+
+		// If difference between start and stop is greater than 500ms, do nothing.
+		if (end - start > 500) {
+			return;
 		}
+
+		// First, we need to go to top immediately (hack to prevent jump to desired element).
+		windowObject.scroll({top: 0, left: 0});
+
+		// Then, scroll down to it smoothly.
+		scrollTo(windowObject.location.hash, documentObject, windowObject);
 	});
 };
 
