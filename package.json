@@ -1,6 +1,6 @@
 {
   "name": "@grifart/smoothscroll",
-  "version": "0.3.0-beta.1",
+  "version": "0.3.0-rc.1",
   "main": "index.js",
   "private": true,
   "dependencies": {
