@@ -8,9 +8,28 @@ As smoothscroll functionality is nice and more user-friendly, this library solve
 Additionally this library comes with custom easing function registered by default which works as basic ease-in-out with one modification that it skips content if it is too long. This results in nicer transition between two parts of a page.
 
 
+## Usage
+
+You can use smoothscroll by following code with optional attributes.
+
+Load: true - when user has slow internet, it jumps directly to desired element without smooth scrolling, because too visible jumping through the page would appear.
+
+Interaction: true - turn on smoothscrolling :).
+
+
+```javascript
+SmoothScroll(window, document, {
+	load: true,
+	interaction: true,
+});
+
+```
+
+
 ## Development
 
 Whole library consists only of one file - `index.js`. If you need to check how the smoothscrolling looks, see *Visual check* section of this readme.
+
 
 ## Visual check
 
