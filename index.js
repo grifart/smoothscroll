@@ -1,5 +1,6 @@
 import Velocity from 'velocity-animate';
 
+
 export default function (options) {
 	((windowObject, documentObject, options) => {
 
@@ -95,15 +96,18 @@ export default function (options) {
 		// Registration of custom easing
 		Velocity.Easings['ease-in-skip-out'] = easingWithSkip(windowObject);
 
-		if (options !== undefined && typeof options === 'object' && options.interaction !== undefined && options.interaction === true) {
+		// If `options.interaction` is not explicitly set to `false`, run handler.
+		if (!(options !== undefined && typeof options === 'object' && options.interaction !== undefined && options.interaction === false)) {
 			handleInteraction();
 		}
 
-		if (options !== undefined && typeof options === 'object' && options.load !== undefined && options.load === true) {
+		// If `options.load` is not explicitly set to `false`, run handler.
+		if (!(options !== undefined && typeof options === 'object' && options.load !== undefined && options.load === false)) {
 			handleLoad();
 		}
 	})(window, document, options);
 };
+
 
 const scrollTo = (hash, documentObject, windowObject) => {
 	const element = documentObject.querySelector(hash);
