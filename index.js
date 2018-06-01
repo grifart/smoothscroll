@@ -1,112 +1,113 @@
 import Velocity from 'velocity-animate';
-// import smoothScroll from 'smoothscroll-polyfill';  In case of use, add `smoothscroll-polyfill` via `yarn add` first.
 
-/**
- * As of version 62, Chrome started to support natively `behavior: smooth` in  `scrollIntoView()` method.
- * But it works strange - it moves the viewport just to the half of the target container.
- * Thus we have to force the polyfill to behave as intended.
- * Related: https://github.com/iamdustan/smoothscroll/issues/93
- */
-// window.__forceSmoothScrollPolyfill__ = true;
-// smoothScroll.polyfill();
 
-export default class {
-	constructor (windowObject, documentObject) {
-		this.windowObject = windowObject;
-		this.documentObject = documentObject;
+export default function (options) {
+	((windowObject, documentObject, options) => {
 
-		//Registration of custom easing
-		Velocity.Easings['ease-in-skip-out'] = easingWithSkip(this.windowObject);
-	}
-
-	handleInteraction () {
-		if ((typeof document.querySelector === 'undefined') || (typeof document.querySelectorAll === 'undefined')) {
-			return;
-		}
-		if (typeof document.addEventListener === 'undefined') {
-			return;
-		}
-
-		this.documentObject.addEventListener('DOMContentLoaded', () => {
-			const items = this.documentObject.querySelectorAll('a[href^="#"]');
-
-			for (let i in items) {
-				if (typeof items[i] !== 'object') {
-					continue;
-				}
-
-				items[i].addEventListener('click', (e) => {
-					if (typeof e.currentTarget.getAttribute === 'undefined') {
-						return;
-					}
-
-					const hash = e.currentTarget.getAttribute('href');
-					if (!hash) {
-						return;
-					}
-
-					e.preventDefault();
-					e.stopPropagation();
-
-					scrollTo(hash, this.documentObject, this.windowObject);
-				});
-			}
-		});
-	};
-
-	/**
-	 * This function scrolls smoothly to an element if there is a hash in the URL.
-	 * E.g. you have `#example` in URL, then it scrolls to element with id `example`.
-	 *
-	 * Note:
-	 * Because of UX, this behaviour is limited only when whole document is loaded in less than 500ms.
-	 * Otherwise, it jumps directly to desired element without smooth scrolling, because too visible jumping through the page would appear.
-	 */
-	handleLoad () {
-		if (typeof document.querySelector === 'undefined') {
-			return;
-		}
-		if (typeof document.addEventListener === 'undefined') {
-			return;
-		}
-		if (typeof this.windowObject.location === 'undefined') {
-			return;
-		}
-
-		// If no hash, we do not need to run scrolling.
-		if (!this.windowObject.location.hash) {
-			return;
-		}
-
-		// If performance is not present, the browser would not scroll smoothly otherwise I guess. So let's skip it completely, it's not worth fallbacking to Date() function.
-		if (typeof performance === 'undefined') {
-			return;
-		}
-
-		// Start timer.
-		const start = performance.now();
-
-		/*
-		 * The `load` event has been chosen intentionally as it is the state when everything is ready -
-		 * all styles are loaded and offsets are computed correctly - so the scroll will be computed correctly.
+		/**
+		 * This function scrolls smoothly to an element if there is a hash in the URL.
+		 * E.g. you have `#example` in URL, then it scrolls to element with id `example`.
+		 *
+		 * Note:
+		 * Because of UX, this behaviour is limited only when whole document is loaded in less than 500ms.
+		 * Otherwise, it jumps directly to desired element without smooth scrolling, because too visible jumping through the page would appear.
 		 */
-		this.windowObject.addEventListener('load', () => {
-			// End timer.
-			const end = performance.now();
-
-			// If difference between start and stop is greater than 500ms, do nothing.
-			if (end - start > 500) {
+		const handleLoad = () => {
+			if (typeof document.querySelector === 'undefined') {
+				return;
+			}
+			if (typeof document.addEventListener === 'undefined') {
+				return;
+			}
+			if (typeof windowObject.location === 'undefined') {
 				return;
 			}
 
-			// First, we need to go to top immediately (hack to prevent jump to desired element).
-			this.windowObject.scroll({top: 0, left: 0});
+			// If no hash, we do not need to run scrolling.
+			if (!windowObject.location.hash) {
+				return;
+			}
 
-			// Then, scroll down to it smoothly.
-			scrollTo(this.windowObject.location.hash, this.documentObject, this.windowObject);
-		});
-	};
-}
+			// If performance is not present, the browser would not scroll smoothly otherwise I guess. So let's skip it completely, it's not worth fallbacking to Date() function.
+			if (typeof performance === 'undefined') {
+				return;
+			}
+
+			// Start timer.
+			const start = performance.now();
+
+			/*
+			 * The `load` event has been chosen intentionally as it is the state when everything is ready -
+			 * all styles are loaded and offsets are computed correctly - so the scroll will be computed correctly.
+			 */
+			windowObject.addEventListener('load', () => {
+				// End timer.
+				const end = performance.now();
+
+				// If difference between start and stop is greater than 500ms, do nothing.
+				if (end - start > 500) {
+					return;
+				}
+
+				// First, we need to go to top immediately (hack to prevent jump to desired element).
+				windowObject.scroll({top: 0, left: 0});
+
+				// Then, scroll down to it smoothly.
+				scrollTo(windowObject.location.hash, documentObject, windowObject);
+			});
+		};
+
+		const handleInteraction = () => {
+			if ((typeof document.querySelector === 'undefined') || (typeof document.querySelectorAll === 'undefined')) {
+				return;
+			}
+			if (typeof document.addEventListener === 'undefined') {
+				return;
+			}
+
+			documentObject.addEventListener('DOMContentLoaded', () => {
+				const items = documentObject.querySelectorAll('a[href^="#"]');
+
+				for (let i in items) {
+					if (typeof items[i] !== 'object') {
+						continue;
+					}
+
+					items[i].addEventListener('click', (e) => {
+						if (typeof e.currentTarget.getAttribute === 'undefined') {
+							return;
+						}
+
+						const hash = e.currentTarget.getAttribute('href');
+						if (!hash) {
+							return;
+						}
+
+						e.preventDefault();
+						e.stopPropagation();
+
+						scrollTo(hash, documentObject, windowObject);
+					});
+				}
+			});
+		};
+
+
+		// Registration of custom easing
+		Velocity.Easings['ease-in-skip-out'] = easingWithSkip(windowObject);
+
+		// If `options.interaction` is not explicitly set to `false`, run handler.
+		if (!(options !== undefined && typeof options === 'object' && options.interaction !== undefined && options.interaction === false)) {
+			handleInteraction();
+		}
+
+		// If `options.load` is not explicitly set to `false`, run handler.
+		if (!(options !== undefined && typeof options === 'object' && options.load !== undefined && options.load === false)) {
+			handleLoad();
+		}
+	})(window, document, options);
+};
+
 
 const scrollTo = (hash, documentObject, windowObject) => {
 	const element = documentObject.querySelector(hash);
@@ -118,16 +119,6 @@ const scrollTo = (hash, documentObject, windowObject) => {
 			windowObject.location.hash = hash;
 		}
 	});
-
-	/*
-	 * @todo: Consider possibility of using Velocity or this native depending on offset from page top.
-	 * Maybe the native one is better for shorter distances, Velocity is better for longer distances.
-	 * Or maybe just work with the duration on Velocity would be better.
-	 */
-	// documentObject.querySelector('#' + hash).scrollIntoView({
-	// 	behavior: 'smooth'
-	// });
-
 };
 
 //Code for custom easing and helpers for custom easing
