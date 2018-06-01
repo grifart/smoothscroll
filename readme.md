@@ -10,15 +10,26 @@ Additionally this library comes with custom easing function registered by defaul
 
 ## Usage
 
-You can use smoothscroll by following code with optional attributes.
-
-Load: true - when user has slow internet, it jumps directly to desired element without smooth scrolling, because too visible jumping through the page would appear.
-
-Interaction: true - turn on smoothscrolling :).
-
+Import library using ES6 `import` statement and call the smoothscroll function.
+It accepts one optional parameter - an `options` object, which allows you to turn on/off some behaviour.
 
 ```javascript
-SmoothScroll(window, document, {
+SmoothScroll([options])
+```
+
+### Options
+
+| Option | Value | Default value | Description |
+| --- | --- | --- | --- |
+| `load` | `true`/`false` | `true` | Causes smooth scroll to anchored element when the page is loaded.\*
+| `interaction` | `true`/`false` | `true` | Causes smooth scroll on given element when user clicks on an `a` tag having `href` starting with `#` character.
+
+\*Note: when the page load lasts more than 500 ms, load smooth scrolling is disable as it would lead to user-unfriendly behaviour like jumping on the page up and down.
+
+Usage example with all options passed:
+
+```javascript
+SmoothScroll({
 	load: true,
 	interaction: true,
 });
@@ -28,17 +39,14 @@ SmoothScroll(window, document, {
 
 ## Development
 
-Whole library consists only of one file - `index.js`. If you need to check how the smoothscrolling looks, see *Visual check* section of this readme.
+Whole library consists only of one file - `index.js`.
 
-
-## Visual check
-
-For checking a visual feeling of the smoothscroll funcionality, you can take advantage of a testing file `visual.html`.
-You need to run build first to get it work with following commands:
+If you need to check visually how the smooth scrolling behaviour acts like, you can take advantage of a testing file `visual.html` which has some lorem ipsum data and few of links to navigate through the content and test smooth scrolling.
+To get it work, you need to run build first with following commands:
 
 ```bash
 yarn install
-gulp
+yarn run gulp
 ```
 
-And you are ready to view it by opening `visual.html` in your favourite browser. To track for changes, run `gulp watch` instead of `gulp`.
+You can use `yarn run gulp watch` as well.
