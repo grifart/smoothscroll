@@ -154,7 +154,7 @@ const compositeEasing = (firstHalfEasingFn, secondHalfEasingFn) => {
 
 		} else {
 			const normalizedTime = mapIntervalLinear(time, 0.5, 1, 0, 1); // map  0 - 0.5   =>   0 - 1
-			return mapIntervalLinear(secondHalfEasingFn(normalizedTime, opts, tweenDelta), 0, 1, 0.5, 1); // map  1 - 0   =>   0 - 0.5
+			return mapIntervalLinear(secondHalfEasingFn(normalizedTime, opts, tweenDelta), 0, 1, 0.5, 1); // map  1 - 0   =>   0.5 - 1.0
 		}
 	}
 };
