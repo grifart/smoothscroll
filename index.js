@@ -154,7 +154,7 @@ const compositeEasing = (firstHalfEasingFn, secondHalfEasingFn) => {
 
 		} else {
 			const normalizedTime = mapIntervalLinear(time, 0.5, 1, 0, 1); // map  0 - 0.5   =>   0 - 1
-			return mapIntervalLinear(secondHalfEasingFn(normalizedTime, opts, tweenDelta), 0, 1, 0.5, 1); // map  1 - 0   =>   0.5 - 1.0
+			return mapIntervalLinear(secondHalfEasingFn(normalizedTime, opts, tweenDelta), 0, 1, 0.5, 1); // map  1 - 0   =>   0 - 0.5
 		}
 	}
 };
@@ -176,15 +176,15 @@ const computeHowMuchToSkip = (windowObject, tweenDelta) => {
 	// 100 .. 90 %
 	if (howManyScreens <= 2) {
 		howMuchToSkip = 0;
-	} else if (howManyScreens <= 4) {
+	} else if (howManyScreens <= 4) { // 2 - 4 screens; skip 0% - 30% of content
 		howMuchToSkip = mapIntervalLinear(howManyScreens, 2, 4, 0, 0.3);
-	} else if (howManyScreens <= 8) {
+	} else if (howManyScreens <= 8) { // 4 - 8 screens; skip 30% - 60% of content
 		howMuchToSkip = mapIntervalLinear(howManyScreens, 4, 8, 0.3, 0.6);
-	} else if (howManyScreens <= 30) {
+	} else if (howManyScreens <= 30) { // 8 - 30 screens; skip 60% - 85% of content
 		howMuchToSkip = mapIntervalLinear(howManyScreens, 8, 30, 0.6, 0.85);
-	} else if (howManyScreens <= 60) {
+	} else if (howManyScreens <= 60) { // 30 - 60 screens; skip 85% - 90% of content
 		howMuchToSkip = mapIntervalLinear(howManyScreens, 30, 60, 0.85, 0.9);
-	} else {
+	} else { // > 60 screens; skip 90% of content
 		howMuchToSkip = 0.9;
 	}
 
