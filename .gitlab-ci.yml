@@ -1,0 +1,31 @@
+image: node:10
+stages:
+  - install
+  - build
+  - publish
+
+install:
+  stage: install
+  script: yarn
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 2 hours
+
+build:
+  stage: build
+  dependencies: [install]
+  script: yarn build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 2 hours
+
+publish:
+  stage: publish
+  only: [tags]
+  dependencies: [build]
+  script: echo "//registry.npmjs.org/:_authToken=${NPM_ACCESS_TOKEN}" > .npmrc && npm publish --access public
+  artifacts:
+    paths:
+      - dist/
