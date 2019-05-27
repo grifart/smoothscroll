@@ -79,8 +79,6 @@ const handleInteraction = () => {
 				}
 
 				e.preventDefault();
-				e.stopPropagation();
-
 				scrollTo(element.hash);
 			});
 		}
