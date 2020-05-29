@@ -4,19 +4,19 @@ import {initializeOnLoadScroll} from './initializeOnLoadScroll';
 import {initializeOnLinkClickScroll} from './initializeOnLinkClickScroll';
 
 export interface SmoothScrollOptions {
-	readonly load?: boolean;
-	readonly interaction?: boolean;
+	readonly scrollOnLoad?: boolean;
+	readonly scrollOnLinkClick?: boolean;
 }
 
 function SmoothScroll(options?: SmoothScrollOptions): void
 {
 	setupVelocity(Velocity);
 
-	if ( ! (options && options.load === false)) {
+	if ( ! (options && options.scrollOnLoad === false)) {
 		initializeOnLoadScroll();
 	}
 
-	if ( ! (options && options.interaction === false)) {
+	if ( ! (options && options.scrollOnLinkClick === false)) {
 		initializeOnLinkClickScroll();
 	}
 }

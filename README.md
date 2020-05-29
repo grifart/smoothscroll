@@ -18,8 +18,8 @@ yarn add @grifart/smoothscroll
 import SmoothScroll from '@grifart/smoothscroll';
 
 SmoothScroll({
-	load: true,
-	interaction: true,
+	scrollOnLoad: true,
+	scrollOnLinkClick: true,
 });
 ```
 
@@ -27,8 +27,8 @@ SmoothScroll({
 
 | Option | Value | Default value | Description |
 | --- | --- | --- | --- |
-| `load` | `true`/`false` | `true` | Causes smooth scroll to anchored element when the page is loaded.\*
-| `interaction` | `true`/`false` | `true` | Causes smooth scroll on given element when user clicks on an `a` tag having `href` starting with `#` character.
+| `scrollOnLoad` | `true`/`false` | `true` | Causes smooth scroll to anchored element when the page is loaded.\*
+| `scrollOnLinkClick` | `true`/`false` | `true` | Causes smooth scroll on given element when user clicks on an `a` tag having `href` starting with `#` character.
 
 \*Note: when the page load lasts more than 500 ms, load smooth scrolling is disabled as it would lead to user-unfriendly behaviour like jumping on the page up and down.
 
