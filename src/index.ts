@@ -1,7 +1,7 @@
 import * as Velocity from 'velocity-animate';
 import setupVelocity from './setupVelocity';
-import {handleLoad} from './handleLoad';
-import {handleInteraction} from './handleInteraction';
+import {initializeOnLoadScroll} from './initializeOnLoadScroll';
+import {initializeOnLinkClickScroll} from './initializeOnLinkClickScroll';
 
 export interface SmoothScrollOptions {
 	readonly load?: boolean;
@@ -13,11 +13,11 @@ function SmoothScroll(options?: SmoothScrollOptions): void
 	setupVelocity(Velocity);
 
 	if ( ! (options && options.load === false)) {
-		handleLoad();
+		initializeOnLoadScroll();
 	}
 
 	if ( ! (options && options.interaction === false)) {
-		handleInteraction();
+		initializeOnLinkClickScroll();
 	}
 }
 

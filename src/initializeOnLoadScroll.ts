@@ -10,7 +10,7 @@ import {assert} from './assert';
  * Because of UX, this behaviour is limited only when whole document is loaded in less than 500ms.
  * Otherwise, it jumps directly to desired element without smooth scrolling, because too visible jumping through the page would appear.
  */
-export function handleLoad(): void
+export function initializeOnLoadScroll(): void
 {
 	let hashTarget: HashTarget|null = null;
 	const start = performance.now();

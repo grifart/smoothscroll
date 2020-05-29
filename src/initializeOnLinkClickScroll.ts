@@ -2,7 +2,7 @@ import {scrollTo} from './scrollTo';
 import {assert} from './assert';
 import {HashTarget} from './HashTarget';
 
-export function handleInteraction(): void
+export function initializeOnLinkClickScroll(): void
 {
 	document.addEventListener('DOMContentLoaded', () =>
 		document.querySelectorAll('a[href^="#"]').forEach((item) =>
