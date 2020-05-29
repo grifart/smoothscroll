@@ -1,4 +1,4 @@
-import {scrollTo} from './scrollTo';
+import {scrollToTarget} from './scrollToTarget';
 import {HashTarget} from './HashTarget';
 import {assert} from './assert';
 
@@ -36,6 +36,6 @@ export function initializeOnLoadScroll(): void
 
 		// Then, scroll down to it smoothly.
 		assert(hashTarget !== null, 'Hash target should be set on DOM loaded.');
-		scrollTo(hashTarget);
+		scrollToTarget(hashTarget);
 	});
 }

@@ -1,4 +1,4 @@
-import {scrollTo} from './scrollTo';
+import {scrollToTarget} from './scrollToTarget';
 import {assert} from './assert';
 import {HashTarget} from './HashTarget';
 
@@ -11,6 +11,6 @@ export function initializeOnLinkClickScroll(): void
 				assert(element !== null);
 
 				event.preventDefault();
-				scrollTo(HashTarget.fromString(element.hash, document));
+				scrollToTarget(HashTarget.fromString(element.hash, document));
 			})));
 }
