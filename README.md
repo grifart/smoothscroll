@@ -17,8 +17,12 @@ yarn add @grifart/smoothscroll
 ```javascript
 import SmoothScroll from '@grifart/smoothscroll';
 
+// use defaults
+SmoothScroll();
+
+// customize
 SmoothScroll({
-	scrollOnLoad: true,
+	scrollOnLoad: false,
 	scrollOnLinkClick: true,
 });
 ```
@@ -36,6 +40,7 @@ SmoothScroll({
 ## Development
 
 ```bash
+yarn install
 yarn dev
 ```
 
