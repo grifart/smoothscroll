@@ -18,10 +18,10 @@ yarn add @grifart/smoothscroll
 import SmoothScroll from '@grifart/smoothscroll';
 
 // use defaults
-SmoothScroll();
+SmoothScroll.enable();
 
 // customize
-SmoothScroll({
+SmoothScroll.enable({
 	scrollOnLoad: false,
 	scrollOnLinkClick: true,
 });

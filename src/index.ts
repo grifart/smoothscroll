@@ -8,16 +8,22 @@ export interface SmoothScrollOptions {
 	readonly scrollOnLinkClick?: boolean;
 }
 
-function SmoothScroll(options?: SmoothScrollOptions): void
+/**
+ * Wrapped into class for intuitive API use – `SmoothScroll.enable()`
+ */
+class SmoothScroll
 {
-	setupVelocity(Velocity);
+	public static enable(options?: SmoothScrollOptions): void
+	{
+		setupVelocity(Velocity);
 
-	if ( ! (options && options.scrollOnLoad === false)) {
-		initializeOnLoadScroll();
-	}
+		if ( ! (options && options.scrollOnLoad === false)) {
+			initializeOnLoadScroll();
+		}
 
-	if ( ! (options && options.scrollOnLinkClick === false)) {
-		initializeOnLinkClickScroll();
+		if ( ! (options && options.scrollOnLinkClick === false)) {
+			initializeOnLinkClickScroll();
+		}
 	}
 }
 
