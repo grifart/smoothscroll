@@ -1,4 +1,6 @@
 import {scrollTo} from './scrollTo';
+import {assert} from './assert';
+import {HashTarget} from './HashTarget';
 
 export function handleInteraction(): void
 {
@@ -6,11 +8,9 @@ export function handleInteraction(): void
 		document.querySelectorAll('a[href^="#"]').forEach((item) =>
 			item.addEventListener('click', (event) => {
 				const element = event.currentTarget as HTMLAnchorElement;
-				if ( ! element.hash) {
-					return;
-				}
+				assert(element !== null);
 
 				event.preventDefault();
-				scrollTo(element.hash);
+				scrollTo(HashTarget.fromString(element.hash, document));
 			})));
 }

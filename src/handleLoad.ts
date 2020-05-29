@@ -1,7 +1,9 @@
 import {scrollTo} from './scrollTo';
+import {HashTarget} from './HashTarget';
+import {assert} from './assert';
 
 /**
- * This function scrolls smoothly to an element if there is a hash in the URL.
+ * Scrolls smoothly to an element if there is a hash in the URL.
  * E.g. you have `#example` in URL, then it scrolls to element with id `example`.
  *
  * Note:
@@ -10,19 +12,14 @@ import {scrollTo} from './scrollTo';
  */
 export function handleLoad(): void
 {
-	// If no hash, we do not need to run scrolling.
-	if ( ! window.location.hash) {
-		return;
-	}
-
-	// If performance is not present, the browser would not scroll smoothly otherwise I guess. So let's skip it completely, it's not worth fallbacking to Date() function.
-	if (performance === undefined) {
-		return;
-	}
-
+	let hashTarget: HashTarget|null = null;
 	const start = performance.now();
 
-	/*
+	document.addEventListener('DOMContentLoaded', () => {
+		hashTarget = HashTarget.fromString(window.location.hash, document);
+	});
+
+	/**
 	 * The `load` event has been chosen intentionally as it is the state when everything is ready -
 	 * all styles are loaded and offsets are computed correctly - so the scroll will be computed correctly.
 	 */
@@ -38,6 +35,7 @@ export function handleLoad(): void
 		window.scroll({top: 0, left: 0});
 
 		// Then, scroll down to it smoothly.
-		scrollTo(window.location.hash);
+		assert(hashTarget !== null, 'Hash target should be set on DOM loaded.');
+		scrollTo(hashTarget);
 	});
 }
