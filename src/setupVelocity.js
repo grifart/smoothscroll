@@ -1,3 +1,5 @@
+export const EASE_IN_SKIP_OUT_EASING = 'ease-in-skip-out';
+
 // e.g. (5, 5, 10, 500, 1000) => 500
 // e.g. (5, 0, 10, 500, 1000) => 750
 const mapIntervalLinear = (number, originalFrom, originalTo, newFrom, newTo) => {
@@ -67,7 +69,7 @@ const computeHowMuchToSkip = (tweenDelta) => {
 };
 
 const setupVelocity = (velocity) => {
-	velocity.Easings['ease-in-skip-out'] = composeEasing(
+	velocity.Easings[EASE_IN_SKIP_OUT_EASING] = composeEasing(
 		(time, opts, tweenDelta) => mapIntervalLinear(
 			velocity.Easings['ease-in'](time, opts, tweenDelta),
 			0, 1, // from interval
