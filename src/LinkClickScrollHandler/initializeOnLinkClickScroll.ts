@@ -1,6 +1,6 @@
-import {scrollToTarget} from './scrollToTarget';
-import {assert} from './assert';
-import {HashTarget} from './HashTarget';
+import {scrollToTarget} from '../scrollers/scrollToTarget';
+import {assert} from '../assert';
+import {HashTarget} from '../HashTarget';
 
 export function initializeOnLinkClickScroll(): void
 {
