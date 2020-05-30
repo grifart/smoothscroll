@@ -3,13 +3,13 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Load scroll test</title>
+	<title>Link click scroll test</title>
 	<script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5/velocity.min.js"></script>
-	<script src="../../dist/index.js"></script>
+	<script src="../../../dist/index.js"></script>
 	<script>
 		SmoothScroll.enable({
-			scrollOnLoad: true,
-			scrollOnLinkClick: false,
+			scrollOnLoad: false,
+			scrollOnLinkClick: true,
 		});
 	</script>
 	<style type="text/css">
@@ -21,9 +21,12 @@
 	</style>
 </head>
 <body>
+
+<div>
 	<p>
-		<strong>Load this page with <code>#test</code> in URL. This section should be skipped on the page load.</strong>
+		<strong>Click link below. View should scroll down.</strong>
 	</p>
+	<a href="#test">▶ Run test</a>
 
 	<!-- placeholder text so that custom easing is visible -->
 	<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam ornare wisi eu metus. Pellentesque ipsum. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. Mauris tincidunt sem sed arcu. Curabitur ligula sapien, pulvinar a vestibulum quis, facilisis vel sapien. Sed ac dolor sit amet purus malesuada congue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris dolor felis, sagittis at, luctus sed, aliquam non, tellus. Proin pede metus, vulputate nec, fermentum fringilla, vehicula vitae, justo. Etiam posuere lacus quis dolor. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Integer tempor. Morbi scelerisque luctus velit. Sed vel lectus. Donec odio tempus molestie, porttitor ut, iaculis quis, sem. Suspendisse sagittis ultrices augue.</p>
@@ -48,10 +51,11 @@
 	<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam ornare wisi eu metus. Pellentesque ipsum. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. Mauris tincidunt sem sed arcu. Curabitur ligula sapien, pulvinar a vestibulum quis, facilisis vel sapien. Sed ac dolor sit amet purus malesuada congue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris dolor felis, sagittis at, luctus sed, aliquam non, tellus. Proin pede metus, vulputate nec, fermentum fringilla, vehicula vitae, justo. Etiam posuere lacus quis dolor. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Integer tempor. Morbi scelerisque luctus velit. Sed vel lectus. Donec odio tempus molestie, porttitor ut, iaculis quis, sem. Suspendisse sagittis ultrices augue.</p>
 
 	<div id="test">
-		<h1>Target on page load scroll</h1>
+		<h1>Target on link click scroll</h1>
 		<p>
 			<strong>If view was scrolled to heading above and you see it complete, this test passes. ✔</strong>
 		</p>
 	</div>
+</div>
 </body>
 </html>

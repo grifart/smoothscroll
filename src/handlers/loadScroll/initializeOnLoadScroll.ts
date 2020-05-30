@@ -1,6 +1,6 @@
-import {scrollToTarget} from '../scrollers/scrollToTarget';
-import {HashTarget} from '../HashTarget';
-import {assert} from '../assert';
+import {scrollToTarget} from '../../scrollers/scrollToTarget';
+import {HashTarget} from '../../HashTarget';
+import {assert} from '../../assert';
 
 /**
  * Scrolls smoothly to an element if there is a hash in the URL.

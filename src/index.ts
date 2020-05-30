@@ -1,7 +1,7 @@
 import * as Velocity from 'velocity-animate';
 import setupVelocity from './easing/setupVelocity';
-import {initializeOnLoadScroll} from './LoadScrollHandler/initializeOnLoadScroll';
-import {initializeOnLinkClickScroll} from './LinkClickScrollHandler/initializeOnLinkClickScroll';
+import {initializeOnLoadScroll} from './handlers/loadScroll/initializeOnLoadScroll';
+import {initializeOnLinkClickScroll} from './handlers/linkClickScroll/initializeOnLinkClickScroll';
 
 export interface SmoothScrollOptions {
 	readonly scrollOnLoad?: boolean;
