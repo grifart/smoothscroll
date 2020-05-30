@@ -12,11 +12,16 @@ import {assert} from '../assert';
  */
 export function initializeOnLoadScroll(): void
 {
+	const hash = window.location.hash;
+	if (hash === '' || hash === '#') {
+		return;
+	}
+
 	let hashTarget: HashTarget|null = null;
 	const start = performance.now();
 
 	document.addEventListener('DOMContentLoaded', () => {
-		hashTarget = HashTarget.fromString(window.location.hash, document);
+		hashTarget = HashTarget.fromString(hash, document);
 	});
 
 	/**

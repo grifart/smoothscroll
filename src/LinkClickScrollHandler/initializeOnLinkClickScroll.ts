@@ -10,6 +10,10 @@ export function initializeOnLinkClickScroll(): void
 				const element = event.currentTarget as HTMLAnchorElement;
 				assert(element !== null);
 
+				if (element.hash === '' || element.hash === '#') {
+					return;
+				}
+
 				event.preventDefault();
 				scrollToTarget(HashTarget.fromString(element.hash, document));
 			})));
