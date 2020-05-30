@@ -44,4 +44,5 @@ yarn install
 yarn dev
 ```
 
-Every piece of this library comes with its unit test sitting alongside the script. Whole library is covered by integration test sitting in `src` folder.
+Every piece of this library comes with its unit test sitting alongside the script. Whole library is covered by integration test sitting in `src` folder.  
+Note that you have to build assets first (`yarn build`) before running a test.
