@@ -44,4 +44,4 @@ yarn install
 yarn dev
 ```
 
-If you need to check visually how the smooth scrolling behaviour acts like, you can take advantage of a testing file `demo.html` which has some lorem ipsum data and few of links to navigate through the content and test smooth scrolling.
+Every piece of this library comes with its unit test sitting alongside the script. Whole library is covered by integration test sitting in `src` folder.
