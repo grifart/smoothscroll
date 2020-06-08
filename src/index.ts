@@ -7,7 +7,7 @@ import {scrollToOffset} from './scrollers/scrollToOffset';
 import {scrollToTarget} from './scrollers/scrollToTarget';
 import {HashTarget} from './HashTarget';
 
-export interface SmoothScrollOptions {
+interface SmoothScrollOptions {
 	readonly scrollOnLoad?: boolean;
 	readonly scrollOnLinkClick?: boolean;
 }
@@ -46,4 +46,8 @@ class SmoothScroll
 	}
 }
 
+export {
+	SmoothScrollOptions,
+	HashTarget,
+};
 export default SmoothScroll;
