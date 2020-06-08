@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>scrollToOffset() scroll test</title>
+	<script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5/velocity.min.js"></script>
+	<script src="../../dist/index.js"></script>
+	<script>
+		SmoothScroll.enable({
+			scrollOnLoad: false,
+			scrollOnLinkClick: false,
+		});
+	</script>
+	<style type="text/css">
+		body {
+			margin: 0 auto;
+			max-width: 40rem;
+		}
+
+		.target {
+			position: absolute;
+			top: 5000px;
+			padding-bottom: 200vh; /* make some space so that scrolling target can reach top of viewport */
+		}
+	</style>
+</head>
+<body>
+
+<div>
+	<p>
+		<strong>Click button below. View should scroll down.</strong>
+	</p>
+	<button type="button" id="triggerer">▶ Run test</button>
+	<script>
+		document.getElementById('triggerer').addEventListener('click', () =>
+			SmoothScroll.scrollToOffset(
+				5000,
+				() => document.getElementById('greenText').style.color = 'green',
+			)
+		);
+	</script>
+
+	<div class="target">
+		<h1>Target on <code>SmootScroll.scrollToOffset()</code> call</h1>
+		<p>
+			<strong>If view was scrolled smoothly to heading above, you see it complete and <span id="greenText">this text is green</span>, the test is passing. ✔</strong>
+		</p>
+	</div>
+</div>
+</body>
+</html>
