@@ -1,12 +1,19 @@
-import * as Velocity from 'velocity-animate';
 import {HashTarget} from '../HashTarget';
-import {EASE_IN_SKIP_OUT_EASING} from '../easing/setupVelocity';
+import {scrollToElement} from './scrollToElement';
+import {assert} from '../assert';
 
-export function scrollToTarget(hashTarget: HashTarget): void
+export function scrollToTarget(hashTarget: HashTarget|string, onScrollFinishedCallback?: () => void): void
 {
-	Velocity.animate(hashTarget.getElement(), 'scroll', {
-		duration: 1200, // todo: different depending on offset from page top?
-		easing: EASE_IN_SKIP_OUT_EASING,
-		complete: () => window.location.hash = hashTarget.getHash(),
-	});
+	if (typeof hashTarget === 'string') {
+		hashTarget = HashTarget.fromString(hashTarget, document);
+	}
+
+	scrollToElement(
+		hashTarget.getElement(),
+		() => {
+			assert(hashTarget instanceof HashTarget);
+			window.location.hash = hashTarget.getHash();
+			onScrollFinishedCallback !== undefined && onScrollFinishedCallback();
+		},
+	);
 }
