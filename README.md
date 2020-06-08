@@ -1,11 +1,6 @@
 # @grifart/smoothscroll
 
-As smoothscroll functionality is nice and more user-friendly, this library solves these two things which were often repeating in our code:
-
-1. Enables smooth scrolling on all anchors starting with `#` character.
-2. Enables smooth scrolling when page is entered with `#` character in URL.
-
-Additionally this library comes with custom easing function registered by default which works as basic ease-in-out with one modification that it skips content if it is too long. This results in nicer transition between two parts of a page.
+Aim of this library is to provide more user-friendly and less epileptic scrolling effect on a long content as well as unification of all types of scrolling on a page.
 
 
 ## Installation and usage
@@ -22,7 +17,7 @@ SmoothScroll.enable();
 
 // customize
 SmoothScroll.enable({
-	scrollOnLoad: false,
+	scrollOnLoad: true,
 	scrollOnLinkClick: true,
 });
 ```
@@ -36,6 +31,31 @@ SmoothScroll.enable({
 
 \*Note: when the page load lasts more than 500 ms, load smooth scroll effect is disabled as it would lead to user-unfriendly behaviour like jumping on the page up and down due to browser native behaviour.
 
+### Methods
+
+|Method|Parameters|
+|---|---|
+|`enable([options])`|`options` (optional): see above|
+|`scrollToElement(element[, onScrollFinishedCallback])`|`element`: element to scroll to  `onScrollFinishedCallback` (optional): callback to trigger when scrolling is finished|
+|`scrollToOffset(topOffset[, onScrollFinishedCallback])`|`topOffset`: scroll offset from top of document  `onScrollFinishedCallback` (optional): callback to trigger when scrolling is finished|
+|`scrollToTarget(hashTarget[, onScrollFinishedCallback])`|`hashTarget`: instance of `HashTarget` object\* or `string`\*\*  `onScrollFinishedCallback` (optional): callback to trigger when scrolling is finished|
+
+\* `HashTarget` is a value object representing a target to scroll to. You can easily initalize it with named constructor: `HashTarget.fromString('#some-identifier', document)`  
+\*\* In case of passing `string`, `HashTarget` object will be instantiated automatically with current `document` context.
+
+## More about
+
+### Custom scrolling effect
+
+Improved scrolling effect (internally called `ease-in-skip-out`) is registered by default and it works as basic ease-in-out with one modification that it skips content if it is too long. This results in nicer transition between two parts of a page.
+
+### Covered scenarios
+
+- scroll when clicking a link with an anchor (`<a href="#anchor">whatever</a>`)
+- scroll when page is entered with an anchor (`https://example.com/whatever#anchor`)
+- scroll when programatically needed to scroll to:
+    - given position (top offset)
+    - given element
 
 ## Development
 
