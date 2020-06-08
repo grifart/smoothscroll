@@ -1,7 +1,6 @@
 .idea/
 .rpt2_cache/
 .babelrc
-demo.html
 rollup.config.js
 tsconfig.json
 yarn.lock

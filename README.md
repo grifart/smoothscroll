@@ -17,9 +17,13 @@ yarn add @grifart/smoothscroll
 ```javascript
 import SmoothScroll from '@grifart/smoothscroll';
 
-SmoothScroll({
-	load: true,
-	interaction: true,
+// use defaults
+SmoothScroll.enable();
+
+// customize
+SmoothScroll.enable({
+	scrollOnLoad: false,
+	scrollOnLinkClick: true,
 });
 ```
 
@@ -27,16 +31,18 @@ SmoothScroll({
 
 | Option | Value | Default value | Description |
 | --- | --- | --- | --- |
-| `load` | `true`/`false` | `true` | Causes smooth scroll to anchored element when the page is loaded.\*
-| `interaction` | `true`/`false` | `true` | Causes smooth scroll on given element when user clicks on an `a` tag having `href` starting with `#` character.
+| `scrollOnLoad`\* | `true`/`false` | `true` | Causes smooth scroll to anchored element when the page is loaded.
+| `scrollOnLinkClick` | `true`/`false` | `true` | Causes smooth scroll on given element when user clicks on an `a` tag having `href` starting with `#` character.
 
-\*Note: when the page load lasts more than 500 ms, load smooth scrolling is disabled as it would lead to user-unfriendly behaviour like jumping on the page up and down.
+\*Note: when the page load lasts more than 500 ms, load smooth scroll effect is disabled as it would lead to user-unfriendly behaviour like jumping on the page up and down due to browser native behaviour.
 
 
 ## Development
 
 ```bash
+yarn install
 yarn dev
 ```
 
-If you need to check visually how the smooth scrolling behaviour acts like, you can take advantage of a testing file `demo.html` which has some lorem ipsum data and few of links to navigate through the content and test smooth scrolling.
+Every piece of this library comes with its unit test sitting alongside the script. Whole library is covered by integration test sitting in `src` folder.  
+Note that you have to build assets first (`yarn build`) before running a test.
