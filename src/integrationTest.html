@@ -11,11 +11,25 @@
 			scrollOnLoad: true,
 			scrollOnLinkClick: true,
 		});
+
+		document.addEventListener('DOMContentLoaded', () => {
+			document.getElementById('scrollToElement').addEventListener('click', (event) => {
+				event.preventDefault(); // prevent jump to top as there is `#` in `href` attribute
+				SmoothScroll.scrollToElement(document.getElementById('footer'));
+			});
+
+			document.getElementById('scrollToOffset').addEventListener('click', () =>
+				SmoothScroll.scrollToOffset(5000));
+
+			document.getElementById('scrollToTarget').addEventListener('click', () =>
+				SmoothScroll.scrollToTarget('#item3'));
+		});
 	</script>
 	<style type="text/css">
 		body {
 			margin: 0 auto;
 			max-width: 40rem;
+			padding-bottom: 150vh;
 		}
 
 		.goToTop {
@@ -34,7 +48,6 @@
 	</style>
 </head>
 <body>
-<!-- @todo: improve this file -->
 
 	<div id="nahoru"></div>
 	<a href="#item1">Item1</a>
@@ -42,6 +55,9 @@
 	<a href="#item3">Item3</a>
 	<a href="#item4">Item4</a>
 	<a href="#item5">Item5</a>
+	<a href="#" id="scrollToElement">Scroll to element</a>
+	<button type="button" id="scrollToOffset">Scroll to 5000px top offset</button>
+	<a href="#" id="scrollToTarget">Scroll to target</a>
 
 	<div>
 		<div id="item1">
@@ -221,6 +237,16 @@
 		<a href="#nahoru" class="goToTop">
 			Go to top
 		</a>
+	</div>
+
+	<div id="footer">
+		<p>
+			Footer
+		</p>
+
+		<p>
+			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam ornare wisi eu metus. Pellentesque ipsum.
+		</p>
 	</div>
 </body>
 </html>
