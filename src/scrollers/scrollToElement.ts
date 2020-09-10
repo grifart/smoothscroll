@@ -1,5 +1,5 @@
 import * as Velocity from 'velocity-animate';
-import {EASE_IN_SKIP_OUT_EASING} from '../easing/setupVelocity';
+import {EASE_IN_SKIP_OUT_EASING} from '../easing/bindEasingToVelocity';
 
 export function scrollToElement(element: HTMLElement, onScrollFinishedCallback?: () => void): void
 {

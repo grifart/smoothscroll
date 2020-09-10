@@ -1,5 +1,5 @@
 import * as Velocity from 'velocity-animate';
-import setupVelocity from './easing/setupVelocity';
+import bindEasingToVelocity from './easing/bindEasingToVelocity';
 import {initializeOnLoadScroll} from './handlers/loadScroll/initializeOnLoadScroll';
 import {initializeOnLinkClickScroll} from './handlers/linkClickScroll/initializeOnLinkClickScroll';
 import {scrollToElement} from './scrollers/scrollToElement';
