@@ -1,7 +1,5 @@
 .idea/
 .rpt2_cache/
-dist/
 node_modules/
 
-visual.dist.*
 yarn.lock
