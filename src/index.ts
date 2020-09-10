@@ -7,47 +7,33 @@ import {scrollToOffset} from './scrollers/scrollToOffset';
 import {scrollToTarget} from './scrollers/scrollToTarget';
 import {HashTarget} from './HashTarget';
 
-interface SmoothScrollOptions {
-	readonly scrollOnLoad?: boolean;
-	readonly scrollOnLinkClick?: boolean;
+
+// bind automatically on library import
+bindEasingToVelocity(Velocity);
+
+
+function handleGlobalScrollingBehavior(): void
+{
+	handleOnLoadScroll();
+	handleOnLinkClickScroll();
 }
 
-/**
- * Wrapped into class for intuitive API use – `SmoothScroll.something()`
- */
-class SmoothScroll
+function handleOnLoadScroll(): void
 {
-	public static enable(options?: SmoothScrollOptions): void
-	{
-		setupVelocity(Velocity);
+	initializeOnLoadScroll();
+}
 
-		if ( ! (options && options.scrollOnLoad === false)) {
-			initializeOnLoadScroll();
-		}
-
-		if ( ! (options && options.scrollOnLinkClick === false)) {
-			initializeOnLinkClickScroll();
-		}
-	}
-
-	public static scrollToElement(element: HTMLElement, onScrollFinishedCallback?: () => void): void
-	{
-		scrollToElement(element, onScrollFinishedCallback);
-	}
-
-	public static scrollToOffset(topOffset: number, onScrollFinishedCallback?: () => void): void
-	{
-		scrollToOffset(topOffset, onScrollFinishedCallback);
-	}
-
-	public static scrollToTarget(target: HashTarget, onScrollFinishedCallback?: () => void): void
-	{
-		scrollToTarget(target, onScrollFinishedCallback);
-	}
+function handleOnLinkClickScroll(): void
+{
+	initializeOnLinkClickScroll();
 }
 
 export {
-	SmoothScrollOptions,
 	HashTarget,
+	handleGlobalScrollingBehavior,
+	handleOnLoadScroll,
+	handleOnLinkClickScroll,
+	scrollToElement,
+	scrollToOffset,
+	scrollToTarget,
 };
-export default SmoothScroll;
