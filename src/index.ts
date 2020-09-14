@@ -1,30 +1,32 @@
 import * as Velocity from 'velocity-animate';
-import setupVelocity from './easing/setupVelocity';
+import bindEasingToVelocity from './easing/bindEasingToVelocity';
 import {initializeOnLoadScroll} from './handlers/loadScroll/initializeOnLoadScroll';
 import {initializeOnLinkClickScroll} from './handlers/linkClickScroll/initializeOnLinkClickScroll';
+import {scrollToElement} from './scrollers/scrollToElement';
+import {scrollToOffset} from './scrollers/scrollToOffset';
+import {scrollToTarget} from './scrollers/scrollToTarget';
+import {HashTarget} from './HashTarget';
 
-export interface SmoothScrollOptions {
-	readonly scrollOnLoad?: boolean;
-	readonly scrollOnLinkClick?: boolean;
-}
 
-/**
- * Wrapped into class for intuitive API use – `SmoothScroll.enable()`
- */
-class SmoothScroll
+// bind automatically on library import
+bindEasingToVelocity(Velocity);
+
+
+function handleOnLoadScroll(): void
 {
-	public static enable(options?: SmoothScrollOptions): void
-	{
-		setupVelocity(Velocity);
-
-		if ( ! (options && options.scrollOnLoad === false)) {
-			initializeOnLoadScroll();
-		}
-
-		if ( ! (options && options.scrollOnLinkClick === false)) {
-			initializeOnLinkClickScroll();
-		}
-	}
+	initializeOnLoadScroll();
 }
 
-export default SmoothScroll;
+function handleOnLinkClickScroll(): void
+{
+	initializeOnLinkClickScroll();
+}
+
+export {
+	HashTarget,
+	handleOnLoadScroll,
+	handleOnLinkClickScroll,
+	scrollToElement,
+	scrollToOffset,
+	scrollToTarget,
+};

@@ -68,7 +68,7 @@ const computeHowMuchToSkip = (tweenDelta) => {
 	return howMuchToSkip;
 };
 
-const setupVelocity = (velocity) => {
+const bindEasingToVelocity = (velocity) => {
 	velocity.Easings[EASE_IN_SKIP_OUT_EASING] = composeEasing(
 		(time, opts, tweenDelta) => mapIntervalLinear(
 			velocity.Easings['ease-in'](time, opts, tweenDelta),
@@ -83,4 +83,4 @@ const setupVelocity = (velocity) => {
 	);
 };
 
-export default setupVelocity;
+export default bindEasingToVelocity;
