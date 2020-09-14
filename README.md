@@ -27,14 +27,14 @@ is importable through standard ES `import` directive.
 |---|---|
 | **`handleOnLoadScroll()`** | Attaches scrolling to anchored element when the page is loaded.\* |
 | **`handleOnLinkClickScroll()`** | Attaches scrolling to given element when user clicks on an `a` tag having `href` starting with `#` character. |
-| **`handleGlobalScrollingBehavior()`** | Calls all functions above. |
 
 Use these functions **in top-level code**:
 
 ```javascript
-import {handleGlobalScrollingBehavior} from '@grifart/smoothscroll';
+import {handleOnLoadScroll, handleOnLinkClickScroll} from '@grifart/smoothscroll';
 
-handleGlobalScrollingBehavior();
+handleOnLoadScroll();
+handleOnLinkClickScroll();
 ```
 
 \*Note: when page load lasts more than 500 ms, load scroll effect

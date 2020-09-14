@@ -222,10 +222,6 @@
 	}
 
 	bindEasingToVelocity(Velocity);
-	function handleGlobalScrollingBehavior() {
-	    handleOnLoadScroll();
-	    handleOnLinkClickScroll();
-	}
 	function handleOnLoadScroll() {
 	    initializeOnLoadScroll();
 	}
@@ -234,7 +230,6 @@
 	}
 
 	exports.HashTarget = HashTarget;
-	exports.handleGlobalScrollingBehavior = handleGlobalScrollingBehavior;
 	exports.handleOnLoadScroll = handleOnLoadScroll;
 	exports.handleOnLinkClickScroll = handleOnLinkClickScroll;
 	exports.scrollToElement = scrollToElement;

@@ -219,10 +219,6 @@ function scrollToOffset(topOffset, onScrollFinishedCallback) {
 }
 
 bindEasingToVelocity(Velocity);
-function handleGlobalScrollingBehavior() {
-    handleOnLoadScroll();
-    handleOnLinkClickScroll();
-}
 function handleOnLoadScroll() {
     initializeOnLoadScroll();
 }
@@ -230,4 +226,4 @@ function handleOnLinkClickScroll() {
     initializeOnLinkClickScroll();
 }
 
-export { HashTarget, handleGlobalScrollingBehavior, handleOnLoadScroll, handleOnLinkClickScroll, scrollToElement, scrollToOffset, scrollToTarget };
+export { HashTarget, handleOnLoadScroll, handleOnLinkClickScroll, scrollToElement, scrollToOffset, scrollToTarget };

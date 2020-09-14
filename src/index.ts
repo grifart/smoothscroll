@@ -12,12 +12,6 @@ import {HashTarget} from './HashTarget';
 bindEasingToVelocity(Velocity);
 
 
-function handleGlobalScrollingBehavior(): void
-{
-	handleOnLoadScroll();
-	handleOnLinkClickScroll();
-}
-
 function handleOnLoadScroll(): void
 {
 	initializeOnLoadScroll();
@@ -30,7 +24,6 @@ function handleOnLinkClickScroll(): void
 
 export {
 	HashTarget,
-	handleGlobalScrollingBehavior,
 	handleOnLoadScroll,
 	handleOnLinkClickScroll,
 	scrollToElement,
