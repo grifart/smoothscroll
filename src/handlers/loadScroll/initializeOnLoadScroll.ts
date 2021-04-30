@@ -21,7 +21,9 @@ export function initializeOnLoadScroll(): void
 	const start = performance.now();
 
 	document.addEventListener('DOMContentLoaded', () => {
-		hashTarget = HashTarget.fromString(hash, document);
+		try {
+			hashTarget = HashTarget.fromString(hash, document);
+		} catch (e) {} // when URL contains hash which has no corresponding DOM element, just ignore it
 	});
 
 	/**
@@ -29,6 +31,10 @@ export function initializeOnLoadScroll(): void
 	 * all styles are loaded and offsets are computed correctly - so the scroll will be computed correctly.
 	 */
 	window.addEventListener('load', () => {
+		if (hashTarget === null) { // if target does not exist
+			return;
+		}
+
 		const end = performance.now();
 
 		// If difference between start and stop is greater than 500ms, do nothing.
@@ -40,7 +46,6 @@ export function initializeOnLoadScroll(): void
 		window.scroll({top: 0, left: 0});
 
 		// Then, scroll down to it smoothly.
-		assert(hashTarget !== null, 'Hash target should be set on DOM loaded.');
 		scrollToTarget(hashTarget);
 	});
 }

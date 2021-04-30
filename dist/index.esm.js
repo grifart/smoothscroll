@@ -181,15 +181,20 @@ function initializeOnLoadScroll() {
     var hashTarget = null;
     var start = performance.now();
     document.addEventListener('DOMContentLoaded', function () {
-        hashTarget = HashTarget.fromString(hash, document);
+        try {
+            hashTarget = HashTarget.fromString(hash, document);
+        }
+        catch (e) { }
     });
     window.addEventListener('load', function () {
+        if (hashTarget === null) {
+            return;
+        }
         var end = performance.now();
         if (end - start > 500) {
             return;
         }
         window.scroll({ top: 0, left: 0 });
-        assert(hashTarget !== null, 'Hash target should be set on DOM loaded.');
         scrollToTarget(hashTarget);
     });
 }
