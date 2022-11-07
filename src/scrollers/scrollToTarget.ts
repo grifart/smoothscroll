@@ -5,11 +5,11 @@ import {assert} from '../assert';
 export function scrollToTarget(hashTarget: HashTarget|string, onScrollFinishedCallback?: () => void): void
 {
 	if (typeof hashTarget === 'string') {
-		hashTarget = HashTarget.fromString(hashTarget, document);
+		hashTarget = HashTarget.fromString(hashTarget);
 	}
 
 	scrollToElement(
-		hashTarget.getElement(),
+		hashTarget.getRefElement(document),
 		() => {
 			assert(hashTarget instanceof HashTarget);
 			window.location.hash = hashTarget.getHash();

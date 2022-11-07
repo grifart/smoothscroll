@@ -22,7 +22,7 @@ export function initializeOnLoadScroll(): void
 
 	document.addEventListener('DOMContentLoaded', () => {
 		try {
-			hashTarget = HashTarget.fromString(hash, document);
+			hashTarget = HashTarget.fromString(hash);
 		} catch (e) {} // when URL contains hash which has no corresponding DOM element, just ignore it
 	});
 

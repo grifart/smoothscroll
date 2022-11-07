@@ -15,6 +15,6 @@ export function initializeOnLinkClickScroll(): void
 				}
 
 				event.preventDefault();
-				scrollToTarget(HashTarget.fromString(element.hash, document));
+				scrollToTarget(HashTarget.fromString(element.hash));
 			})));
 }
