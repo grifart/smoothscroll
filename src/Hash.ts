@@ -1,13 +1,13 @@
 /**
  * Represents valid hash as per https://developer.mozilla.org/en-US/docs/Web/API/HTMLHyperlinkElementUtils/hash
  */
-export class HashTarget
+export class Hash
 {
 	private constructor(
 		private readonly value: string,
 	) {}
 
-	public static fromString(value: string): HashTarget
+	public static fromString(value: string): Hash
 	{
 		if (value === '' || value === '#') {
 			throw new Error('Hash does not contain any fragment.');
@@ -16,12 +16,12 @@ export class HashTarget
 		return new this(value);
 	}
 
-	public getHash(): string
+	public getValue(): string
 	{
 		return this.value;
 	}
 
-	public getRefElement(document: HTMLDocument): HTMLElement
+	public findTargetElementIn(document: HTMLDocument): HTMLElement
 	{
 		const targetElementId = this.value.substring(1);
 		const targetElement = document.getElementById(targetElementId);
