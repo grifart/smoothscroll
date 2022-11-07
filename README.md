@@ -43,17 +43,15 @@ jumping on the page up and down due to browser native behaviour.
 
 ### scrollToX functions
 
-|Function|Parameters|
-|---|---|
-|`scrollToElement(element[, onScrollFinishedCallback])`|`element`: element to scroll to;  `onScrollFinishedCallback` (optional): callback to trigger when scrolling is finished|
-|`scrollToOffset(topOffset[, onScrollFinishedCallback])`|`topOffset`: scroll offset from top of document;  `onScrollFinishedCallback` (optional): callback to trigger when scrolling is finished|
-|`scrollToTarget(hashTarget[, onScrollFinishedCallback])`|`hashTarget`: instance of `HashTarget` object\* or `string`\*\*;  `onScrollFinishedCallback` (optional): callback to trigger when scrolling is finished|
+| Function                                                 | Parameters                                                                                                                                                     |
+|----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `scrollToElement(element[, onScrollFinishedCallback])`   | `element`: element to scroll to;  `onScrollFinishedCallback` (optional): callback to trigger when scrolling is finished                                        |
+| `scrollToOffset(topOffset[, onScrollFinishedCallback])`  | `topOffset`: scroll offset from top of document;  `onScrollFinishedCallback` (optional): callback to trigger when scrolling is finished                        |
+| `scrollToTarget(targetHash[, onScrollFinishedCallback])` | `targetHash`: instance of `Hash` value object\* or hash a `string`;  `onScrollFinishedCallback` (optional): callback to trigger when scrolling is finished |
 
-\* `HashTarget` is a value object representing a target to scroll to.
+\* `Hash` is a value object representing a hash being requested.
 You can easily initalize it with named constructor:
-`HashTarget.fromString('#some-identifier', document)`  
-\*\* In case of passing `string`, `HashTarget` object will be
-instantiated automatically with current `document` context.
+`Hash.fromString('#some-identifier')`
 
 ## More about
 
