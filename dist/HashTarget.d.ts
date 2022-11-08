@@ -1,8 +1,7 @@
 export declare class HashTarget {
     private readonly value;
-    private readonly targetElement;
     private constructor();
-    static fromString(value: string, document: HTMLDocument): HashTarget;
+    static fromString(value: string): HashTarget;
     getHash(): string;
-    getElement(): HTMLElement;
+    getRefElement(document: HTMLDocument): HTMLElement;
 }

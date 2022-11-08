@@ -5,7 +5,7 @@ import {initializeOnLinkClickScroll} from './handlers/linkClickScroll/initialize
 import {scrollToElement} from './scrollers/scrollToElement';
 import {scrollToOffset} from './scrollers/scrollToOffset';
 import {scrollToTarget} from './scrollers/scrollToTarget';
-import {HashTarget} from './HashTarget';
+import {Hash} from './Hash';
 
 
 // bind automatically on library import
@@ -23,7 +23,7 @@ function handleOnLinkClickScroll(): void
 }
 
 export {
-	HashTarget,
+	Hash,
 	handleOnLoadScroll,
 	handleOnLinkClickScroll,
 	scrollToElement,

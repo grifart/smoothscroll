@@ -1,18 +1,18 @@
-import {HashTarget} from '../HashTarget';
+import {Hash} from '../Hash';
 import {scrollToElement} from './scrollToElement';
 import {assert} from '../assert';
 
-export function scrollToTarget(hashTarget: HashTarget|string, onScrollFinishedCallback?: () => void): void
+export function scrollToTarget(targetHash: Hash|string, onScrollFinishedCallback?: () => void): void
 {
-	if (typeof hashTarget === 'string') {
-		hashTarget = HashTarget.fromString(hashTarget, document);
+	if (typeof targetHash === 'string') {
+		targetHash = Hash.fromString(targetHash);
 	}
 
 	scrollToElement(
-		hashTarget.getElement(),
+		targetHash.findTargetElementIn(document),
 		() => {
-			assert(hashTarget instanceof HashTarget);
-			window.location.hash = hashTarget.getHash();
+			assert(targetHash instanceof Hash);
+			window.location.hash = targetHash.getValue();
 			onScrollFinishedCallback !== undefined && onScrollFinishedCallback();
 		},
 	);

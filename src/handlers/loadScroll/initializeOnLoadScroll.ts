@@ -1,5 +1,5 @@
 import {scrollToTarget} from '../../scrollers/scrollToTarget';
-import {HashTarget} from '../../HashTarget';
+import {Hash} from '../../Hash';
 import {assert} from '../../assert';
 
 /**
@@ -17,12 +17,12 @@ export function initializeOnLoadScroll(): void
 		return;
 	}
 
-	let hashTarget: HashTarget|null = null;
+	let targetHash: Hash|null = null;
 	const start = performance.now();
 
 	document.addEventListener('DOMContentLoaded', () => {
 		try {
-			hashTarget = HashTarget.fromString(hash, document);
+			targetHash = Hash.fromString(hash);
 		} catch (e) {} // when URL contains hash which has no corresponding DOM element, just ignore it
 	});
 
@@ -31,7 +31,7 @@ export function initializeOnLoadScroll(): void
 	 * all styles are loaded and offsets are computed correctly - so the scroll will be computed correctly.
 	 */
 	window.addEventListener('load', () => {
-		if (hashTarget === null) { // if target does not exist
+		if (targetHash === null) { // if hash does not exist
 			return;
 		}
 
@@ -46,6 +46,6 @@ export function initializeOnLoadScroll(): void
 		window.scroll({top: 0, left: 0});
 
 		// Then, scroll down to it smoothly.
-		scrollToTarget(hashTarget);
+		scrollToTarget(targetHash);
 	});
 }

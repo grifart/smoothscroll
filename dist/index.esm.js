@@ -1,16 +1,19 @@
 import * as Velocity from 'velocity-animate';
 
-var EASE_IN_SKIP_OUT_EASING = 'ease-in-skip-out'; // e.g. (5, 5, 10, 500, 1000) => 500
-// e.g. (5, 0, 10, 500, 1000) => 750
+var EASE_IN_SKIP_OUT_EASING = 'ease-in-skip-out';
 
+// e.g. (5, 5, 10, 500, 1000) => 500
+// e.g. (5, 0, 10, 500, 1000) => 750
 var mapIntervalLinear = function mapIntervalLinear(number, originalFrom, originalTo, newFrom, newTo) {
   var oldDistance = originalTo - originalFrom;
-  var newDistance = newTo - newFrom; // normalize value into interval 0 .. 1
+  var newDistance = newTo - newFrom;
 
-  var normalized = (number - originalFrom) / oldDistance; // extend and move normalized value into new interval
-
+  // normalize value into interval 0 .. 1
+  var normalized = (number - originalFrom) / oldDistance;
+  // extend and move normalized value into new interval
   return normalized * newDistance + newFrom;
 };
+
 /**
  * Composes easings together, splits time into half.
  *
@@ -18,8 +21,6 @@ var mapIntervalLinear = function mapIntervalLinear(number, originalFrom, origina
  * @param secondHalfEasingFn second half of easing
  * @return {function(*=, *=, *=)} the composed easing
  */
-
-
 var composeEasing = function composeEasing(firstHalfEasingFn, secondHalfEasingFn) {
   // time: The call's completion percentage (decimal value).
   // opts (optional): The options object passed into the triggering Velocity call.
@@ -27,21 +28,21 @@ var composeEasing = function composeEasing(firstHalfEasingFn, secondHalfEasingFn
   return function (time, opts, tweenDelta) {
     if (time < 0.5) {
       var normalizedTime = mapIntervalLinear(time, 0, 0.5, 0, 1); // map  0 - 0.5   =>   0 - 1
-
       return mapIntervalLinear(firstHalfEasingFn(normalizedTime, opts, tweenDelta), 0, 1, 0, 0.5); // map  1 - 0   =>   0 - 0.5
     } else {
       var _normalizedTime = mapIntervalLinear(time, 0.5, 1, 0, 1); // map  0 - 0.5   =>   0 - 1
-
-
       return mapIntervalLinear(secondHalfEasingFn(_normalizedTime, opts, tweenDelta), 0, 1, 0.5, 1); // map  1 - 0   =>   0 - 0.5
     }
   };
 };
 
 var computeHowMuchToSkip = function computeHowMuchToSkip(tweenDelta) {
-  var howManyScreens = Math.abs(tweenDelta) / window.innerHeight; // 0 .. 1 (percents)
+  var howManyScreens = Math.abs(tweenDelta) / window.innerHeight;
 
-  var howMuchToSkip = 0; // by testing in browser we have found following values as smooth:
+  // 0 .. 1 (percents)
+  var howMuchToSkip = 0;
+
+  // by testing in browser we have found following values as smooth:
   // howManyScreens .. howMuchToSkip
   // 1 .. 0%
   // 2 .. 0%
@@ -50,7 +51,6 @@ var computeHowMuchToSkip = function computeHowMuchToSkip(tweenDelta) {
   // 30 .. 85%
   // 60 .. 90%
   // 100 .. 90%
-
   if (howManyScreens <= 2) {
     howMuchToSkip = 0;
   } else if (howManyScreens <= 4) {
@@ -69,45 +69,44 @@ var computeHowMuchToSkip = function computeHowMuchToSkip(tweenDelta) {
     // > 60 screens; skip 90% of content
     howMuchToSkip = 0.9;
   }
-
   return howMuchToSkip;
 };
-
 var bindEasingToVelocity = function bindEasingToVelocity(velocity) {
   velocity.Easings[EASE_IN_SKIP_OUT_EASING] = composeEasing(function (time, opts, tweenDelta) {
-    return mapIntervalLinear(velocity.Easings['ease-in'](time, opts, tweenDelta), 0, 1, // from interval
+    return mapIntervalLinear(velocity.Easings['ease-in'](time, opts, tweenDelta), 0, 1,
+    // from interval
     0, 1 - computeHowMuchToSkip(tweenDelta) // to interval
     );
   }, function (time, opts, tweenDelta) {
-    return mapIntervalLinear(velocity.Easings['ease-out'](time, opts, tweenDelta), 0, 1, // from interval
+    return mapIntervalLinear(velocity.Easings['ease-out'](time, opts, tweenDelta), 0, 1,
+    // from interval
     computeHowMuchToSkip(tweenDelta), 1 // to interval
     );
   });
 };
 
-var HashTarget = (function () {
-    function HashTarget(value, targetElement) {
+var Hash = (function () {
+    function Hash(value) {
         this.value = value;
-        this.targetElement = targetElement;
     }
-    HashTarget.fromString = function (value, document) {
+    Hash.fromString = function (value) {
         if (value === '' || value === '#') {
             throw new Error('Hash does not contain any fragment.');
         }
-        var targetElementId = value.substring(1);
-        var targetElement = document.getElementById(targetElementId);
-        if (targetElement === null) {
-            throw new Error("No referenced element with ID " + targetElementId + " exists.");
-        }
-        return new this(value, targetElement);
+        return new this(value);
     };
-    HashTarget.prototype.getHash = function () {
+    Hash.prototype.getValue = function () {
         return this.value;
     };
-    HashTarget.prototype.getElement = function () {
-        return this.targetElement;
+    Hash.prototype.findTargetElementIn = function (document) {
+        var targetElementId = this.value.substring(1);
+        var targetElement = document.getElementById(targetElementId);
+        if (targetElement === null) {
+            throw new Error("No referenced element with ID ".concat(targetElementId, " exists."));
+        }
+        return targetElement;
     };
-    return HashTarget;
+    return Hash;
 }());
 
 function scrollToElement(element, onScrollFinishedCallback) {
@@ -162,13 +161,13 @@ function assert(condition, message) {
     }
 }
 
-function scrollToTarget(hashTarget, onScrollFinishedCallback) {
-    if (typeof hashTarget === 'string') {
-        hashTarget = HashTarget.fromString(hashTarget, document);
+function scrollToTarget(targetHash, onScrollFinishedCallback) {
+    if (typeof targetHash === 'string') {
+        targetHash = Hash.fromString(targetHash);
     }
-    scrollToElement(hashTarget.getElement(), function () {
-        assert(hashTarget instanceof HashTarget);
-        window.location.hash = hashTarget.getHash();
+    scrollToElement(targetHash.findTargetElementIn(document), function () {
+        assert(targetHash instanceof Hash);
+        window.location.hash = targetHash.getValue();
         onScrollFinishedCallback !== undefined && onScrollFinishedCallback();
     });
 }
@@ -178,16 +177,16 @@ function initializeOnLoadScroll() {
     if (hash === '' || hash === '#') {
         return;
     }
-    var hashTarget = null;
+    var targetHash = null;
     var start = performance.now();
     document.addEventListener('DOMContentLoaded', function () {
         try {
-            hashTarget = HashTarget.fromString(hash, document);
+            targetHash = Hash.fromString(hash);
         }
         catch (e) { }
     });
     window.addEventListener('load', function () {
-        if (hashTarget === null) {
+        if (targetHash === null) {
             return;
         }
         var end = performance.now();
@@ -195,7 +194,7 @@ function initializeOnLoadScroll() {
             return;
         }
         window.scroll({ top: 0, left: 0 });
-        scrollToTarget(hashTarget);
+        scrollToTarget(targetHash);
     });
 }
 
@@ -209,7 +208,7 @@ function initializeOnLinkClickScroll() {
                     return;
                 }
                 event.preventDefault();
-                scrollToTarget(HashTarget.fromString(element.hash, document));
+                scrollToTarget(Hash.fromString(element.hash));
             });
         });
     });
@@ -232,5 +231,5 @@ function handleOnLinkClickScroll() {
     initializeOnLinkClickScroll();
 }
 
-export { HashTarget, handleOnLinkClickScroll, handleOnLoadScroll, scrollToElement, scrollToOffset, scrollToTarget };
+export { Hash, handleOnLinkClickScroll, handleOnLoadScroll, scrollToElement, scrollToOffset, scrollToTarget };
 //# sourceMappingURL=index.esm.js.map
