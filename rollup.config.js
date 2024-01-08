@@ -11,6 +11,7 @@ export default {
 		{ file: pkg.module, format: 'esm', sourcemap: true },
 	],
 	external: [
+		/@babel\/runtime/, // see https://github.com/rollup/plugins/tree/master/packages/babel#babelhelpers
 		...Object.keys(pkg.dependencies || {}),
 		...Object.keys(pkg.peerDependencies || {}),
 	],
@@ -18,7 +19,9 @@ export default {
 		resolve(),
 		typescript(),
 		babel({
+			babelHelpers: 'runtime',
 			exclude: 'node_modules/**',
+			plugins: ['@babel/plugin-transform-runtime'],
 		}),
 	],
 }

@@ -11,14 +11,19 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
+    "@babel/plugin-transform-runtime": "^7.23.7",
     "@babel/preset-env": "^7.23.7",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.5",
+    "@types/babel__plugin-transform-runtime": "^7",
     "@types/velocity-animate": "^1.2.33",
     "rollup": "^4.9.4",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "@babel/runtime": "^7"
   },
   "scripts": {
     "build": "rollup -c",
