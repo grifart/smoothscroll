@@ -1,15 +1,15 @@
 import * as Velocity from 'velocity-animate';
 
-var EASE_IN_SKIP_OUT_EASING = 'ease-in-skip-out';
+const EASE_IN_SKIP_OUT_EASING = 'ease-in-skip-out';
 
 // e.g. (5, 5, 10, 500, 1000) => 500
 // e.g. (5, 0, 10, 500, 1000) => 750
-var mapIntervalLinear = function mapIntervalLinear(number, originalFrom, originalTo, newFrom, newTo) {
-  var oldDistance = originalTo - originalFrom;
-  var newDistance = newTo - newFrom;
+const mapIntervalLinear = (number, originalFrom, originalTo, newFrom, newTo) => {
+  const oldDistance = originalTo - originalFrom;
+  const newDistance = newTo - newFrom;
 
   // normalize value into interval 0 .. 1
-  var normalized = (number - originalFrom) / oldDistance;
+  const normalized = (number - originalFrom) / oldDistance;
   // extend and move normalized value into new interval
   return normalized * newDistance + newFrom;
 };
@@ -21,25 +21,25 @@ var mapIntervalLinear = function mapIntervalLinear(number, originalFrom, origina
  * @param secondHalfEasingFn second half of easing
  * @return {function(*=, *=, *=)} the composed easing
  */
-var composeEasing = function composeEasing(firstHalfEasingFn, secondHalfEasingFn) {
+const composeEasing = (firstHalfEasingFn, secondHalfEasingFn) => {
   // time: The call's completion percentage (decimal value).
   // opts (optional): The options object passed into the triggering Velocity call.
   // tweenDelta (optional): The difference between the animating property's ending value and its starting value.
-  return function (time, opts, tweenDelta) {
+  return (time, opts, tweenDelta) => {
     if (time < 0.5) {
-      var normalizedTime = mapIntervalLinear(time, 0, 0.5, 0, 1); // map  0 - 0.5   =>   0 - 1
+      const normalizedTime = mapIntervalLinear(time, 0, 0.5, 0, 1); // map  0 - 0.5   =>   0 - 1
       return mapIntervalLinear(firstHalfEasingFn(normalizedTime, opts, tweenDelta), 0, 1, 0, 0.5); // map  1 - 0   =>   0 - 0.5
     } else {
-      var _normalizedTime = mapIntervalLinear(time, 0.5, 1, 0, 1); // map  0 - 0.5   =>   0 - 1
-      return mapIntervalLinear(secondHalfEasingFn(_normalizedTime, opts, tweenDelta), 0, 1, 0.5, 1); // map  1 - 0   =>   0 - 0.5
+      const normalizedTime = mapIntervalLinear(time, 0.5, 1, 0, 1); // map  0 - 0.5   =>   0 - 1
+      return mapIntervalLinear(secondHalfEasingFn(normalizedTime, opts, tweenDelta), 0, 1, 0.5, 1); // map  1 - 0   =>   0 - 0.5
     }
   };
 };
-var computeHowMuchToSkip = function computeHowMuchToSkip(tweenDelta) {
-  var howManyScreens = Math.abs(tweenDelta) / window.innerHeight;
+const computeHowMuchToSkip = tweenDelta => {
+  const howManyScreens = Math.abs(tweenDelta) / window.innerHeight;
 
   // 0 .. 1 (percents)
-  var howMuchToSkip = 0;
+  let howMuchToSkip = 0;
 
   // by testing in browser we have found following values as smooth:
   // howManyScreens .. howMuchToSkip
@@ -70,18 +70,14 @@ var computeHowMuchToSkip = function computeHowMuchToSkip(tweenDelta) {
   }
   return howMuchToSkip;
 };
-var bindEasingToVelocity = function bindEasingToVelocity(velocity) {
-  velocity.Easings[EASE_IN_SKIP_OUT_EASING] = composeEasing(function (time, opts, tweenDelta) {
-    return mapIntervalLinear(velocity.Easings['ease-in'](time, opts, tweenDelta), 0, 1,
-    // from interval
-    0, 1 - computeHowMuchToSkip(tweenDelta) // to interval
-    );
-  }, function (time, opts, tweenDelta) {
-    return mapIntervalLinear(velocity.Easings['ease-out'](time, opts, tweenDelta), 0, 1,
-    // from interval
-    computeHowMuchToSkip(tweenDelta), 1 // to interval
-    );
-  });
+const bindEasingToVelocity = velocity => {
+  velocity.Easings[EASE_IN_SKIP_OUT_EASING] = composeEasing((time, opts, tweenDelta) => mapIntervalLinear(velocity.Easings['ease-in'](time, opts, tweenDelta), 0, 1,
+  // from interval
+  0, 1 - computeHowMuchToSkip(tweenDelta) // to interval
+  ), (time, opts, tweenDelta) => mapIntervalLinear(velocity.Easings['ease-out'](time, opts, tweenDelta), 0, 1,
+  // from interval
+  computeHowMuchToSkip(tweenDelta), 1 // to interval
+  ));
 };
 
 var Hash = (function () {
