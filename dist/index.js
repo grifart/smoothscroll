@@ -104,11 +104,37 @@ var Hash = (function () {
     return Hash;
 }());
 
+var NativeScrollBehavior = (function () {
+    function NativeScrollBehavior(rootEl) {
+        this.rootEl = rootEl;
+        this.originalValue = null;
+    }
+    NativeScrollBehavior.forWindowObject = function () {
+        return new this(document.documentElement);
+    };
+    NativeScrollBehavior.prototype.remove = function () {
+        this.originalValue = window.getComputedStyle(this.rootEl).getPropertyValue('scrollBehavior');
+        this.rootEl.style.scrollBehavior = 'unset';
+    };
+    NativeScrollBehavior.prototype.restore = function () {
+        if (this.originalValue === null) {
+            return;
+        }
+        this.rootEl.style.scrollBehavior = this.originalValue;
+    };
+    return NativeScrollBehavior;
+}());
+var nativeScrollBehavior = NativeScrollBehavior.forWindowObject();
+
 function scrollToElement(element, onScrollFinishedCallback) {
+    nativeScrollBehavior.remove();
     Velocity.animate(element, 'scroll', {
         duration: 1200,
         easing: EASE_IN_SKIP_OUT_EASING,
-        complete: function () { return onScrollFinishedCallback !== undefined && onScrollFinishedCallback(); },
+        complete: function () {
+            nativeScrollBehavior.restore();
+            onScrollFinishedCallback !== undefined && onScrollFinishedCallback();
+        },
     });
 }
 
@@ -215,11 +241,15 @@ function initializeOnLinkClickScroll() {
 }
 
 function scrollToOffset(topOffset, onScrollFinishedCallback) {
+    nativeScrollBehavior.remove();
     Velocity.animate(document.documentElement, 'scroll', {
         duration: 1200,
         offset: topOffset,
         easing: EASE_IN_SKIP_OUT_EASING,
-        complete: onScrollFinishedCallback,
+        complete: function () {
+            nativeScrollBehavior.restore();
+            onScrollFinishedCallback !== undefined && onScrollFinishedCallback();
+        },
     });
 }
 
