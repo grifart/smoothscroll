@@ -74,10 +74,21 @@ between two distant parts in a page.
 ## Development
 
 ```bash
+# build image
+docker build -t grifart-smoothscroll-dev .
+
+# run from built image
+docker run -it --rm -v .:/smoothscroll -w /smoothscroll grifart-smoothscroll-dev /bin/bash
+
+# inside of the container
+# install deps
 yarn install
+# build assets once
+yarn build
+# or run dev mode
 yarn dev
 ```
 
 Every piece of this library comes with its unit test sitting alongside the script.
 Whole library is covered by integration test sitting in `src` folder.  
-Note that you have to build assets first (`yarn build`) before running a test.
+Note that you have to build assets first (`yarn build`) before running any test.
