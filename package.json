@@ -5,7 +5,6 @@
   "license": "MIT",
   "main": "dist/index.js",
   "type": "module",
-  "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "dependencies": {
     "velocity-animate": "^1.5.1"
@@ -15,7 +14,6 @@
     "@babel/plugin-transform-runtime": "^7.23.7",
     "@babel/preset-env": "^7.23.7",
     "@rollup/plugin-babel": "^6.0.4",
-    "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.5",
     "@types/babel__plugin-transform-runtime": "^7",
     "@types/velocity-animate": "^1.2.33",
